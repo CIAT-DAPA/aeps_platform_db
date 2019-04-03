@@ -18,6 +18,151 @@ USE `aeps_2_0`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `__efmigrationshistory`
+--
+
+DROP TABLE IF EXISTS `__efmigrationshistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `__efmigrationshistory` (
+  `MigrationId` text NOT NULL,
+  `ProductVersion` text NOT NULL,
+  PRIMARY KEY (`MigrationId`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetroleclaims`
+--
+
+DROP TABLE IF EXISTS `aspnetroleclaims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetroleclaims` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ClaimType` text,
+  `ClaimValue` text,
+  `RoleId` varchar(127) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_AspNetRoleClaims_RoleId` (`RoleId`),
+  CONSTRAINT `FK_AspNetRoleClaims_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `aspnetroles` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetroles`
+--
+
+DROP TABLE IF EXISTS `aspnetroles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetroles` (
+  `Id` varchar(127) NOT NULL,
+  `ConcurrencyStamp` text,
+  `Name` varchar(256) DEFAULT NULL,
+  `NormalizedName` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetuserclaims`
+--
+
+DROP TABLE IF EXISTS `aspnetuserclaims`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetuserclaims` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ClaimType` text,
+  `ClaimValue` text,
+  `UserId` varchar(127) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `FK_AspNetUserClaims_AspNetUsers_UserId` (`UserId`),
+  CONSTRAINT `FK_AspNetUserClaims_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetuserlogins`
+--
+
+DROP TABLE IF EXISTS `aspnetuserlogins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetuserlogins` (
+  `LoginProvider` varchar(127) NOT NULL,
+  `ProviderKey` varchar(127) NOT NULL,
+  `ProviderDisplayName` text,
+  `UserId` varchar(127) NOT NULL,
+  PRIMARY KEY (`LoginProvider`,`ProviderKey`),
+  KEY `FK_AspNetUserLogins_AspNetUsers_UserId` (`UserId`),
+  CONSTRAINT `FK_AspNetUserLogins_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetuserroles`
+--
+
+DROP TABLE IF EXISTS `aspnetuserroles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetuserroles` (
+  `UserId` varchar(127) NOT NULL,
+  `RoleId` varchar(127) NOT NULL,
+  PRIMARY KEY (`UserId`,`RoleId`),
+  KEY `FK_AspNetUserRoles_AspNetRoles_RoleId` (`RoleId`),
+  CONSTRAINT `FK_AspNetUserRoles_AspNetRoles_RoleId` FOREIGN KEY (`RoleId`) REFERENCES `aspnetroles` (`Id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_AspNetUserRoles_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetusers`
+--
+
+DROP TABLE IF EXISTS `aspnetusers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetusers` (
+  `Id` varchar(127) NOT NULL,
+  `AccessFailedCount` int(11) NOT NULL,
+  `ConcurrencyStamp` text,
+  `Email` varchar(256) DEFAULT NULL,
+  `EmailConfirmed` bit(1) NOT NULL,
+  `LockoutEnabled` bit(1) NOT NULL,
+  `LockoutEnd` timestamp NULL DEFAULT NULL,
+  `NormalizedEmail` varchar(256) DEFAULT NULL,
+  `NormalizedUserName` varchar(256) DEFAULT NULL,
+  `PasswordHash` text,
+  `PhoneNumber` text,
+  `PhoneNumberConfirmed` bit(1) NOT NULL,
+  `SecurityStamp` text,
+  `TwoFactorEnabled` bit(1) NOT NULL,
+  `UserName` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `aspnetusertokens`
+--
+
+DROP TABLE IF EXISTS `aspnetusertokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aspnetusertokens` (
+  `UserId` varchar(127) NOT NULL,
+  `LoginProvider` varchar(127) NOT NULL,
+  `Name` varchar(127) NOT NULL,
+  `Value` text,
+  PRIMARY KEY (`UserId`,`LoginProvider`,`Name`),
+  CONSTRAINT `FK_AspNetUserTokens_AspNetUsers_UserId` FOREIGN KEY (`UserId`) REFERENCES `aspnetusers` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `con_countries`
 --
 
@@ -305,7 +450,7 @@ CREATE TABLE `frm_blocks` (
   `created` datetime NOT NULL COMMENT 'date when it was created',
   `updated` datetime NOT NULL COMMENT 'date when it was updated',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table has the list of blocks or sections to add to the forms';
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='This table has the list of blocks or sections to add to the forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -347,7 +492,28 @@ CREATE TABLE `frm_forms` (
   `created` datetime NOT NULL COMMENT 'date when it was created',
   `updated` datetime NOT NULL COMMENT 'date when it was updated',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='This table has the list of forms';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='This table has the list of forms';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `frm_forms_settings`
+--
+
+DROP TABLE IF EXISTS `frm_forms_settings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `frm_forms_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `form` int(11) NOT NULL COMMENT 'id of form',
+  `app` enum('all','odk','pdi') NOT NULL COMMENT 'it sets the application which is gonna be used [all, odk, pdi]',
+  `name` varchar(500) NOT NULL COMMENT 'name of variable for setttings',
+  `value` text NOT NULL COMMENT 'value of variable for setttings',
+  `created` datetime NOT NULL COMMENT 'date when it was created',
+  `updated` datetime NOT NULL COMMENT 'date when it was updated',
+  PRIMARY KEY (`id`),
+  KEY `fk_frm_forms_frm_forms_settings_idx` (`form`),
+  CONSTRAINT `fk_frm_forms_frm_forms_settings` FOREIGN KEY (`form`) REFERENCES `frm_forms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='This table has the list of settings for forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -369,7 +535,7 @@ CREATE TABLE `frm_options` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_questions_frm_options_idx` (`question`),
   CONSTRAINT `fk_frm_questions_frm_options` FOREIGN KEY (`question`) REFERENCES `frm_questions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table has the list of options for questions, the questions have to be unique or multiple';
+) ENGINE=InnoDB AUTO_INCREMENT=381 DEFAULT CHARSET=utf8 COMMENT='This table has the list of options for questions, the questions have to be unique or multiple';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -394,7 +560,27 @@ CREATE TABLE `frm_questions` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_blocks_frm_questions_idx` (`block`),
   CONSTRAINT `fk_frm_blocks_frm_questions` FOREIGN KEY (`block`) REFERENCES `frm_blocks` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table has the list of questions for the forms';
+) ENGINE=InnoDB AUTO_INCREMENT=508 DEFAULT CHARSET=utf8 COMMENT='This table has the list of questions for the forms';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `frm_questions_rules`
+--
+
+DROP TABLE IF EXISTS `frm_questions_rules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `frm_questions_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'primary key',
+  `question` int(11) NOT NULL COMMENT 'id of question',
+  `app` enum('all','odk','pdi') NOT NULL COMMENT 'it sets the application which is gonna be validated [all, odk, pdi]',
+  `type` enum('required','constraint','relevant','appearance','calculation','choice_filter') NOT NULL COMMENT 'it sets which is kind of validation to check [required, constraint, relevant, appearance, calculation, choice_filter]',
+  `message` text COMMENT 'this message will show when the rule will be broken',
+  `rule` text NOT NULL COMMENT 'rule in terms of application',
+  PRIMARY KEY (`id`),
+  KEY `fk_frm_questions_frm_questions_rules_idx` (`question`),
+  CONSTRAINT `fk_frm_questions_frm_questions_rules` FOREIGN KEY (`question`) REFERENCES `frm_questions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=829 DEFAULT CHARSET=utf8 COMMENT='This table has the list of rules for each question. A rule depends of the application in where is gonna be validated';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -463,14 +649,6 @@ CREATE TABLE `soc_technical_assistants` (
   CONSTRAINT `fk_soc_people_soc_technical_assistants` FOREIGN KEY (`person`) REFERENCES `soc_people` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This table has the information about who people are technical assistants';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping events for database 'aeps_2_0'
---
-
---
--- Dumping routines for database 'aeps_2_0'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -481,4 +659,4 @@ CREATE TABLE `soc_technical_assistants` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-12 15:57:54
+-- Dump completed on 2019-04-03  8:10:39

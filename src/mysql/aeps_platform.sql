@@ -450,7 +450,7 @@ CREATE TABLE `frm_blocks` (
   `created` datetime NOT NULL COMMENT 'date when it was created',
   `updated` datetime NOT NULL COMMENT 'date when it was updated',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8 COMMENT='This table has the list of blocks or sections to add to the forms';
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COMMENT='This table has the list of blocks or sections to add to the forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -492,7 +492,7 @@ CREATE TABLE `frm_forms` (
   `created` datetime NOT NULL COMMENT 'date when it was created',
   `updated` datetime NOT NULL COMMENT 'date when it was updated',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='This table has the list of forms';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='This table has the list of forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -513,7 +513,7 @@ CREATE TABLE `frm_forms_settings` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_forms_frm_forms_settings_idx` (`form`),
   CONSTRAINT `fk_frm_forms_frm_forms_settings` FOREIGN KEY (`form`) REFERENCES `frm_forms` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='This table has the list of settings for forms';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='This table has the list of settings for forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -535,7 +535,7 @@ CREATE TABLE `frm_options` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_questions_frm_options_idx` (`question`),
   CONSTRAINT `fk_frm_questions_frm_options` FOREIGN KEY (`question`) REFERENCES `frm_questions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=381 DEFAULT CHARSET=utf8 COMMENT='This table has the list of options for questions, the questions have to be unique or multiple';
+) ENGINE=InnoDB AUTO_INCREMENT=884 DEFAULT CHARSET=utf8 COMMENT='This table has the list of options for questions, the questions have to be unique or multiple';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -560,7 +560,7 @@ CREATE TABLE `frm_questions` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_blocks_frm_questions_idx` (`block`),
   CONSTRAINT `fk_frm_blocks_frm_questions` FOREIGN KEY (`block`) REFERENCES `frm_blocks` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=508 DEFAULT CHARSET=utf8 COMMENT='This table has the list of questions for the forms';
+) ENGINE=InnoDB AUTO_INCREMENT=791 DEFAULT CHARSET=utf8 COMMENT='This table has the list of questions for the forms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -580,7 +580,7 @@ CREATE TABLE `frm_questions_rules` (
   PRIMARY KEY (`id`),
   KEY `fk_frm_questions_frm_questions_rules_idx` (`question`),
   CONSTRAINT `fk_frm_questions_frm_questions_rules` FOREIGN KEY (`question`) REFERENCES `frm_questions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=829 DEFAULT CHARSET=utf8 COMMENT='This table has the list of rules for each question. A rule depends of the application in where is gonna be validated';
+) ENGINE=InnoDB AUTO_INCREMENT=1292 DEFAULT CHARSET=utf8 COMMENT='This table has the list of rules for each question. A rule depends of the application in where is gonna be validated';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -659,4 +659,4 @@ CREATE TABLE `soc_technical_assistants` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-03  8:10:39
+-- Dump completed on 2019-04-08  8:22:55
